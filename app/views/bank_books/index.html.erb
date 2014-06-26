@@ -1,0 +1,21 @@
+<h1>Listing bank_books</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @bank_books.each do |bank_book| %>
+  <tr>
+    <td><%= link_to 'Show', bank_book %></td>
+    <td><%= link_to 'Edit', edit_bank_book_path(bank_book) %></td>
+    <td><%= link_to 'Destroy', bank_book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Bank book', new_bank_book_path %>

@@ -1,0 +1,106 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+ */
+
+
+*= require bootstrap_and_overrides
+*= require bootstrap-datepicker
+
+.total
+{
+  color: #468847;
+  font-weight: bold;
+
+}
+
+#wrapper .container {
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.898);
+    border-radius: 10px 10px 10px 10px;
+    min-height: 66%;
+    padding: 20px;
+}
+
+table#listing {
+    border: 1px solid #CCCCCC;
+    border-collapse: separate;
+    border-radius: 6px 6px 6px 6px;
+    box-shadow: 2px 2px 5px #BBBBBB;
+}
+
+#content_form
+{
+background:#663399; 
+float:left; 
+padding-left:10px;
+border-right: 4px yellowGreen solid;
+border-top: 4px yellowGreen solid;
+border-bottom: 4px yellowGreen solid;
+z-index: 5;
+position: absolute;
+}
+ 
+
+.index_header {
+  background: #Fee580;
+  background-image: -moz-linear-gradient(center top, #fee580 0%, #f8cf39 100%);
+  background-image: -webkit-linear-gradient(top, #fee580 0%, #f8cf39 100%);
+  font-size: 13px; height: 36px;line-height: 36px;
+}
+
+.editing {
+    background: none repeat scroll 0 0 lightyellow;
+}
+
+table#index thead {
+  background: #8BD1F0;
+  background-image: -moz-linear-gradient(center top, #8BD1F0 0%, #8BD1F0 100%);
+  background-image: -webkit-linear-gradient(top, #8BD1F0 0%, #8BD1F0 100%);
+}
+
+ul.nav nav-tabs#select {
+    background: -moz-linear-gradient(center top , #FEE580 0%, #F8CF39 100%) repeat scroll 0 0 #FEE580;
+}
+
+#test {
+  background-color: lightyellow;
+    border-color: lightyellow lightyellow transparent;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px;
+    color: #555555;
+    cursor: default;
+}
+
+a.destroy {
+    color:red;
+}
+
+.logout {
+    padding: 0px 0px 0px;
+}
+
+
+table#index thead th .current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+table#index thead th .asc {
+  background-image: url(/images/up_arrow.gif);
+}
+
+table#index thead th .desc {
+  background-image: url(/images/down_arrow.gif);
+}
+

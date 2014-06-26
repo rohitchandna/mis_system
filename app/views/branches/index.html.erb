@@ -1,0 +1,30 @@
+<br>
+<div class="row">
+  <div class="span9"><h2><font color="green">Branch List</font></h2>Total Record : <b><span class ="total"><font color="green"><%=  @branches.count %></font></span></b></div>
+  <div class="span3"><%= link_to 'Add New Branch', new_branch_path, :class => "btn btn-info" %>
+  </div>
+</div>
+<br>
+<table class="table table-bordered"  id="index">
+  <thead>
+  <tr>
+    <th width="50">#</th>
+    <th>Branch Name</th>
+    
+    <th>View</th>
+    <th>Edit</th>
+  </tr>
+  </thead>
+  <% @starting = 0 %>
+  <%# @starting = @offset %>
+  <% @branches.each do |branch| %>
+  <tr>
+    <td><%= @starting = @starting + 1 %></td>
+    <td><%= branch.branch_name %></td>
+   
+    <td><%= link_to 'View', branch, :class => "show" %></td> 
+    <td><%= link_to 'Edit', edit_branch_path(branch), :class => "edit_branch" %></td>
+  </tr>
+  <% end %>
+</table>
+<br />

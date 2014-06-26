@@ -1,8 +1,12 @@
+
 defaults: &defaults
-  adapter: sqlite
+  adapter: postgres
 
 development:
-  database: db/mis_system_development.db
+  database: mis_dev
+  host: localhost
+  username: mis
+  password: mis
   <<: *defaults
 
   # Add more repositories
@@ -13,12 +17,22 @@ development:
   #     username: the_user
   #     password: secrets
   #     host:     localhost
-  #   repo2:
+  #     repo2:
   #     ...
 
-test:
-  database: db/mis_system_test.db
+test: &test
+  database: mis_test
+  username: mis
+  password: mis
   <<: *defaults
-production:
-  database: db/mis_system_production.db
+
+
+production: &production
+  database: mis_production
+  username: mis		
+  password: mis
+  host: localhost
+  
   <<: *defaults
+
+

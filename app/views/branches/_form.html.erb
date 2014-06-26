@@ -1,0 +1,40 @@
+<%= form_for @branch, :html => {:class => "well form-vertical"} do |f| %>
+<fieldset >
+  <legend><%= controller.action_name.capitalize %> Branch</legend>
+  <% if @branch.errors.any? %>
+  <div class="alert alert-error"> <a class="close" data-dismiss="alert" href="#">×</a>
+    <h2><%= pluralize(@branch.errors.count, "error") %></h2>
+    <ul>
+      <% @branch.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+  <div style="width:50%" >
+    <table class="table table-bordered">
+      
+      <tr>
+	<td><%= f.label :branch_name, "Branch Name",:class => "control-lable" %>
+	<td><%= f.text_field :branch_name, :class => "text_field" %>
+      </tr>
+      <tr>
+      
+      <tr>
+	<td>
+	<td><div class="form-action">
+	    <%= f.submit nil, :class => "btn btn-primary" %>
+	    <%= link_to 'Cancel', branches_path, :class => "btn" %>	
+	  </div>
+      </tr>
+    </table>
+  </div>
+  
+  <div class="control-group">
+    <br />
+    
+  </div>
+
+</fieldset>
+<% end %>

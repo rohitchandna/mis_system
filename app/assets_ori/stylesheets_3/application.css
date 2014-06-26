@@ -1,0 +1,82 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+ */
+
+
+
+
+
+*= require bootstrap_and_overrides
+
+.total
+{
+  color: #468847;
+  font-weight: bold;
+
+}
+
+#wrapper .container {
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.898);
+    border-radius: 10px 10px 10px 10px;
+    min-height: 66%;
+    padding: 20px;
+}
+
+
+table#listing {
+    border: 1px solid #CCCCCC;
+    border-collapse: separate;
+    border-radius: 6px 6px 6px 6px;
+    box-shadow: 2px 2px 5px #BBBBBB;
+}
+
+#content_form
+{
+background:#663399;
+float:left;
+padding-left:10px;
+border-right: 4px #3399FF solid;
+border-top: 4px #3399FF solid;
+border-bottom: 4px #3399FF solid;
+z-index: 5;
+position: absolute;
+}
+
+.index_header {
+  background: ##084B8A;
+  background-image: -moz-linear-gradient(center top, #3399FF 0%, #3399FF 100%);
+  background-image: -webkit-linear-gradient(top, #3399FF 0%, #3399FF 100%);
+  font-size: 13px; height: 36px;line-height: 36px;
+}
+
+.editing {
+    background: none repeat scroll 0 0 #F2EFE4;
+}
+
+table#index thead {
+  background: #Fee580;
+  background-image: -moz-linear-gradient(center top, #3399FF 0%, #3399FF 100%);
+  background-image: -webkit-linear-gradient(top, #3399FF 0%, #3399FF 100%);
+}
+
+ul.nav nav-tabs#select {
+    background: -moz-linear-gradient(center top , #3399FF 0%, #3399FF 100%) repeat scroll 0 0 #FEE580;
+}
+
+
+
+
+
+
+
+
