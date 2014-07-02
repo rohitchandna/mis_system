@@ -1,0 +1,156 @@
+
+
+<div class="span12">
+
+<h2>Welcome <font color="green"><%= current_user.first_name %> <%= current_user.last_name %></font></h2>
+<br>
+<hr>
+<br><ul style="margin: auto" class="thumbnails">
+<!--
+<li style="height: 145px; box-shadow: 1px 1px 4px #cfcfcf; padding: 4px;" class="editing span2">
+<h3 style="text-align: center" class="index_header">New Company</h3>
+<div style="text-align: center; padding: 4px">
+<%= @last_added_company.company_name %>
+<br>
+<%= link_to 'Show', @last_added_company %>
+
+</div>
+
+</li><li style="height: 145px; box-shadow: 1px 1px 4px #cfcfcf; padding: 4px;" class="editing span2">
+<h4 style="text-align: center" class="index_header">New Company Office</h4>
+<div style="text-align: center; padding: 4px">
+<%= @last_added_company_office.office_name %>
+<br>
+<%= link_to 'Show', @last_added_company_office %>
+
+</div>
+</li>
+-->
+<li style="height: 145px; box-shadow: 1px 1px 4px #cfcfcf; padding: 4px;" class="editing span2">
+<h4 style="text-align: center" class="index_header">New Contact Person</h4>
+<div style="text-align: center; padding: 4px">
+<%= @last_added_contact_person.person_name %>
+<br>
+(<%= @last_added_contact_person.company_office.office_name %>)
+<br>
+<%= link_to 'Show', @last_added_contact_person %>
+
+</div>
+</li>
+<li style="height: 145px; box-shadow: 1px 1px 4px #cfcfcf; padding: 4px;" class="editing span2">
+<h4 style="text-align: center" class="index_header">Expire Website Trial</h4>
+<div style="text-align: center; padding: 4px">
+
+  <b> <%= @website_trial_expire_this_week.count %> </b>Website Trial Expire this week
+ <br>
+  <td><%= link_to 'show', '/website_accounts/trial_expire_this_week' %></td>
+
+
+</div>
+</li>
+
+<li style="height: 145px; box-shadow: 1px 1px 4px #cfcfcf; padding: 4px;" class="editing span2">
+<h4 style="text-align: center" class="index_header"> My Meetings This Week</h4>
+<div style="text-align: center; padding: 4px">
+  <% @myweekmeeting_no = 0 %> 
+  <% @mymeetings.each do |thisweekmeeting| %>
+  <% date =  Time.parse(thisweekmeeting.start_date.to_s) %>
+  <%# Time.local(meeting.start_date) %>
+  <%  schedule = IceCube::Schedule.new(date) %>
+  <% rule1 = IceCube::Rule.monthly(frequncy[thisweekmeeting.frequency.to_s]) %>
+  <%    schedule.add_recurrence_rule rule1 %>
+  <%  final =  schedule.next_occurrence %>
+  <%  final =  Date.parse(final.to_s) %>
+  <% weekdate = final - 7.days %>
+  <% if Date.today <= final && Date.today > weekdate %>
+  <% @myweekmeeting_no =  @myweekmeeting_no + 1 %>
+  <% end %>
+  <% end %>
+  <b> <%= @myweekmeeting_no %> </b>Meetings this week
+ <br>
+  <td><%= link_to 'show', '/meetings/list/thisweek' %></td>
+ 
+</div>
+</li>
+
+</ul>
+
+
+<br>
+<table style="margin-left: 30px;">
+<tr>
+<td valign="top">
+
+<table class="table table-bordered" id="index" style="width:385px;" >
+  <tbody>
+    <thead>
+      <tr>
+	<th colspan=2>CMS Statistics</th>
+      </tr>
+    </thead>
+<tr>
+<td>Regular Service Client</td>
+<td><%= @active_regular_office %> (<%= link_to 'show', '/company_offices/enabled_list?filter_by=regular' %>)
+
+</td>
+</tr>
+<tr>
+<td>Informational Service Client</td>
+<td><%=  @active_informational_office %> (<%= link_to 'show', '/company_offices/enabled_list?filter_by=informational' %>)</td>
+</tr>
+<tr>
+<td>Active Employee (<%= current_user.branch.branch_name %>)</td>
+<td><%=  @active_employee %></td>
+</tr>
+<tr>
+<td>Employee on Leave</td>
+<td><%=  @user_on_leave.count %> (<%= link_to 'show', '/employees/list/onleave' %>)</td>
+</tr>
+ 
+</tbody></table>
+
+
+
+</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</td>
+<td valign="top">
+
+<table class="table table-bordered" cellspacing=5  id="index">
+  <tbody>
+    <thead><tr>
+    <th colspan=2>My Statistics</th>
+
+  </tr>
+      </thead>
+<tr>
+<td>My Permanent Assign Clients</td>
+<td><%# @my_permanent_assign_office %> <%= CompanyOffice.count(:conditions => {:permanent_assign_id => current_user.id, :enabled => true}) %> 	 (<%= link_to 'show', '/company_offices/list/myclients' %>)</td>
+</tr>
+<tr>
+<td>My Temporary Assign Clients</td>
+<td><%#  @my_temporary_assign_office %> <%= CompanyOffice.count(:conditions => {:temporary_assign_id => current_user.id, :enabled => true}) %> (<%= link_to 'show', '/company_offices/list/tempclients' %>)</td>
+</tr>
+<tr>
+<td>Client List<br>
+(No Conversation Today)</td>
+<td>
+<%= link_to 'show', '/company_offices/list/noconversation_today' %>
+</td>
+</tr>
+<tr>
+<td>Last Login</td>
+<td><%=  @Userdetail.last_sign_in_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+</tr>
+ 
+</tbody></table>
+
+</td>
+</tr>
+</table>
+</div>
+
+<% end %>
+<% if current_user.active_state.to_s == 'pre_sale' %>
+<%= render "pre_sale_welcome" %>
+<% end %>

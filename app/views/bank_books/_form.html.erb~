@@ -1,47 +1,126 @@
+
 <%= form_for(@bank_book) do |f| %>
-<% if @bank_book.errors.any? %>
-<div id="error_explanation">
-  <h2><%= pluralize(@bank_book.errors.count, "error") %> prohibited this bank_book from being saved:</h2>
+  <% if @bank_book.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@bank_book.errors.count, "error") %> prohibited this bank_book from being saved:</h2>
 
-  <ul>
-    <% @bank_book.errors.full_messages.each do |msg| %>
-    <li><%= msg %></li>
-    <% end %>
-  </ul>
-</div>
+      <ul>
+      <% @bank_book.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
   <% end %>
-  
-  <div style="width:50%" >
-    <table class="table table-bordered">
+
+
+<div style="width:50%" >
+  <table class="table table-bordered">
+    
+    <tr>
+      <td><%= f.label :branch_id, "Branch" %>
+      <td>
+	
+	<%= f.select(:branch_id, Branch.all.collect {|p| [ p.branch_name, p.id ] }) %>
+      </td>
       
-      <tr>
-       <td><%= f.label :branch_id, "Branch" %> 
-        <%= f.select(:branch_id, Branch.all.collect {|p| [ p.branch_name, p.id ] }) %>
-      </td> 
+    
+    <tr>
+      
+      <td><%= f.label :chq_date, "Chq Date" %>
+<td>	<div class="input-append date" id="dp_chq_date" data-date-format="yyyy-mm-dd">
+<%= f.text_field :chq_date, :class=>"span2" %><span class="add-on"><i class="icon-th" style="background-image: url('/images/glyphicons-halflings.png');"></i></span></div>
+<script type="text/javascript">$('#dp_chq_date').datepicker();</script>
+
+</td>     
+ </tr>
+
+ 
+     
+
+<tr>
+<td><%= f.label :account_head, "Account Head" %>
+<td><%= f.text_field :account_head %><sup><font color="red">*</font></sup>
       </tr>
+
+<tr>
+<td><%= f.label :narration, "Narration" %>
+<td><%= f.text_area :narration, :style => "width: 600px; height: 120px;" %>
+      </tr>
+
+ 
+
+
+
+
+
+<tr>
+<td><%= f.label :remark, "Remarks" %>
+  <td><%= f.text_area :remark, :style => "width: 600px; height: 120px;" %>
+
+
+      </tr>
+
+
+
+<tr>
+<td><%= f.label :gross_amt, "Gross Amt" %>
+<td><%= f.text_field :gross_amt %><sup><font color="red">*</font></sup>
+      </tr>
+
+
+
+<tr>
+<td><%= f.label :service_tax, "Service Tax" %>
+<td><%= f.text_field :service_tax %><sup><font color="red">*</font></sup>
+      </tr>
+
+
+<tr>
+<td><%= f.label :amount, "Amount" %>
+<td><%= f.text_field :amount %><sup><font color="red">*</font></sup>
+      </tr>
+
+
+<tr>
+<td><%= f.label :attach_copy, "Attach Copy" %></td>
+<td align="top"><%= f.file_field :attach_copy %> </td>
+
+
+
+     </tr>
+
+<tr>
+<td><%= f.label :chq_amount, "Chq Amount" %>
+<td><%= f.text_field :chq_amount %><sup><font color="red">*</font></sup>
+      </tr>
+
+<tr>
+<% if current_user.role.to_s == "branch_manager" %>
+    <td><%= f.label :status, "Status" %></td>
+    <td> <%= f.select :status, :collection => [['Not Approved', :not_approved], ['Approved', :approved], ['Rejected', :rejected]] %></td>
+</tr>
+<% else %>
+<tr>
+
+  <td><%= f.label :status, "Status" %></td>
+  <td><%  bb = BankBook.first(:id => params[:id].to_i) %> <%# bb.select.status %></td>
+</tr>
+<% end %>
+
+
+
+
+
+
+
       <tr>
-	<td><%= f.label :chq_date, "Chq Date" %>
-	 
-   <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
-<script>
-$(function() {
-$( "#datepicker" ).datepicker();
-});
-</script>
 
-</td>
-<p> <input type="text" id="datepicker"></p>
-
-      </tr>      
-      
-      <tr>
-	<td><div class="form-action">
-	    <%= f.submit nil, :class => "btn btn-primary" %>
-	    <%= link_to 'Cancel', branches_path, :class => "btn" %>	
-	  </div>
+<td>
+<td><div class="form-action">
+<%= f.submit nil, :class => "btn btn-primary" %>
+<%= link_to 'Cancel', :class => "btn" %>
+</div>
       </tr>
     </table>
   </div>
@@ -50,7 +129,7 @@ $( "#datepicker" ).datepicker();
     <br />
     
   </div>
-  
+
 </fieldset>
 <% end %>
 

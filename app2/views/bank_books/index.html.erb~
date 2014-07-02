@@ -1,0 +1,109 @@
+<script type= "text/javascript">
+function chk()
+{
+
+if(document.getElementById('bank_book_attach_copy').value != "")
+{
+var fup = document.getElementById('bank_book_attach_copy');
+var fileName = fup.value;
+var ext = fileName.substring(fileName.lastIndexOf('.') + 1);
+if(ext == "pdf" || ext == "PDF" || ext == "jpeg" || ext == "JPEG" || ext == "jpg" || ext == "JPG")
+{
+
+}
+else
+{
+alert("Upload Attachment 2 With Extention pdf and jpeg only");
+return false;
+}
+
+}
+
+}
+</script>
+
+  
+  <div class="row">
+    <div class="span9"><h2><font color="green">Bank Book List</font></h2><b><span class ="total"></span></b></div>
+    <div class="span3"><%= link_to 'Add New Bank Book', new_bank_book_path, :class => "btn btn-info" %>
+    </div>
+  </div>
+  <br>
+  <table class="table table-bordered"  id="index">
+    <thead>
+      <tr>
+	
+	<th width="50">#</th>
+	<th>Branch Name</th>
+	<th>Chq Date</th>
+	<th>Account Head</th>
+	<th>Narration</th>
+	<th>Remarks</th>
+	<th>Gross Amt</th>
+	<th>Service Tax</th>
+	<th>Amount</th>
+	<th>Attach Copy</th>
+	<th>Chq Amount </th>
+	<th> User </th>
+	<th> Status </th>  
+	
+	
+	<th>view </th>
+	<th>edit </th> 
+	
+      </tr>
+    </thead>
+    <% @starting = 0 %>
+    <% @bank_books.each do |bank_book| %>
+    <tr>  
+      <td><%= @starting = @starting + 1 %></td>
+      <td><%= bank_book.branch.branch_name %></td>
+      <td><%= bank_book.chq_date %></td>
+      <td><%= bank_book.account_head %></td>
+      <td><%= bank_book.narration %></td>
+      <td><%= bank_book.remark %></td>
+      <td><%= bank_book.gross_amt %></td>
+      <td><%= bank_book.service_tax %></td>
+      <td><%= bank_book.amount %></td>
+      <td><%#  bank_book.attach_copy %> 
+	<% if bank_book.attach_copy.length > 0 %>
+	<%= link_to bank_book.attach_copy, "#{bank_book.attach_copy}", :class => "pagination_link", :target => '_blank' %>
+	<% else %>
+	No Attachment
+	<% end %>
+      </td> 
+      
+      <td><%= bank_book.chq_amount %></td>
+      <td><%= get_username(bank_book.added_by.email) %></td>
+      <% if current_user.role.to_s == "admin" %>
+      <td> <% bank_book.status%>
+	<% if bank_book.status.to_s == 'not_approved' %>
+	<font color="red">Not Approved</font>
+	<% else %>
+	<%= bank_book.status.to_s.capitalize %><br>
+	by <%# get_username(bank_book.action_by.email) %>    
+	<% end %>
+      </td>
+    
+   
+    
+     <td><a href="/bank_books/<%= bank_book.id %>">show</a></td>
+        
+    <td> <%# link_to 'View', bank_book, :class => "show" %> </td> 
+    <td><%# link_to 'Edit', edit_bank_book_path(@bank_book), :class => "edit_bank_book" %> <% end %>
+ <td><a href="/bank_books/<%= edit_bank_book.id %>">show</a></td>  
+
+</td>   
+
+
+
+ </tr>
+ 
+
+
+
+<% end %>
+  
+
+</table>
+

@@ -1,0 +1,102 @@
+<h2>Welcome <font color="green"><%= current_user.first_name %> <%= current_user.last_name %></font></h2>
+<br>
+<hr>
+<br><ul style="margin: auto" class="thumbnails">
+<!--
+<li style="height: 145px; box-shadow: 1px 1px 4px #cfcfcf; padding: 4px;" class="editing span2">
+<h3 style="text-align: center" class="index_header">New Company</h3>
+<div style="text-align: center; padding: 4px">
+<%= @last_added_company %>
+<br>
+<%= link_to 'Show', @last_added_company %>
+
+</div>
+
+
+-->
+
+      
+<ul class="thumbnails" style="margin: auto">
+<!--
+<li style="height: 145px; box-shadow: 1px 1px 4px #cfcfcf; padding: 4px;" class="editing span2">
+<h3 style="text-align: center" class="index_header">New Company</h3>
+<div style="text-align: center; padding: 4px">
+Hemlon Synthetics Pvt. Ltd.
+<br>
+<a href="/companies/1880">Show</a>
+
+</div>
+
+</li><li style="height: 145px; box-shadow: 1px 1px 4px #cfcfcf; padding: 4px;" class="editing span2">
+<h4 style="text-align: center" class="index_header">New Company Office</h4>
+<div style="text-align: center; padding: 4px">
+Lotus International
+<br>
+<a href="/company_offices/1880">Show</a>
+
+</div>
+</li>
+-->
+<li class="editing span2" style="height: 145px; box-shadow: 1px 1px 4px #cfcfcf; padding: 4px;">
+<h4 class="index_header" style="text-align: center">Total Company</h4>
+<div style="text-align: center; padding: 4px">
+<% if current_user.role.to_s == 'admin' %>
+<%= Branch.all.count %>
+<% else %>
+<%= Branch.all(:conditions => {:branch_id => current_user.branch.id, :enabled => true}).count %>
+<% end %>
+<br>
+<a href="/branches/">Show</a>
+
+</div>
+</li>
+<li class="editing span2" style="height: 145px; box-shadow: 1px 1px 4px #cfcfcf; padding: 4px;">
+<h4 class="index_header" style="text-align: center">Report Enabled Client</h4>
+<div style="text-align: center; padding: 4px">
+
+
+
+</div>
+</li>
+
+<li class="editing span2" style="height: 145px; box-shadow: 1px 1px 4px #cfcfcf; padding: 4px;">
+<h4 class="index_header" style="text-align: center">Employee on leave</h4>
+<div style="text-align: center; padding: 4px">
+
+
+</tr>
+
+</div>
+
+
+<li class="editing span2" style="height: 145px; box-shadow: 1px 1px 4px #cfcfcf; padding: 4px;">
+<h4 class="index_header" style="text-align: center">Active Employees</h4>
+<div style="text-align: center; padding: 4px">
+
+
+
+
+
+
+
+
+
+<%= User.all.count %>
+
+ <br>
+  
+ 
+</div>
+</li>
+
+</ul>
+
+
+</div>
+</div>
+
+
+
+ 
+
+

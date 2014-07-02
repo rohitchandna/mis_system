@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>MIS System</title>
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+  </head>
+
+
+
+  
+<div class="navbar navbar-inverse navbar-fixed-top bs-docs-nav">
+      <div class="navbar-inner">
+	<div class="container">
+	  
+	  <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+	  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
+	    
+	</div>
+	
+	<div class="navbar navbar-fixed-top">
+	  <div class="navbar-inner">
+	    <div class="container">
+              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+	      </a>
+	      <a class="brand" href="/">MIS System</a>
+              <div class="nav-collapse">
+		<ul class="nav"> 
+		  <%  if current_user %>
+
+		  <li>
+		    <ul class="nav">
+		      <li class="dropdown">
+			<a href="#"
+			   class="dropdown-toggle"
+			   data-toggle="dropdown">
+			  Branch
+			  <b class="caret"></b>
+			</a>
+			<ul class="dropdown-menu">
+			  <li ><%= link_to 'branch' %></li>	
+			  
+			</ul>
+		      </li>
+		    </ul>
+		  </li>
+
+		  <li>
+		    <ul class="nav">
+		      <li class="dropdown">
+			<a href="#"
+			   class="dropdown-toggle"
+			   data-toggle="dropdown">
+				BANK BOOK
+			  <b class="caret"></b>
+			</a>
+			<ul class="dropdown-menu">
+			  <li ><%= link_to 'Bank Book', "/bank_books" %></li>
+			  <li><a href="/bank_books/pending_list">Pending List</a></li>
+			<li><a href="/bank_books/approve_list">Approve Bank Book List</a></li>
+			</ul>
+		      </li>
+		    </ul>
+		  </li>
+		  	
+approve_list
+
+		  
+		  
+</form>
+</div><!-- /.nav-collapse -->
+
+<ul class="nav pull-right">
+  <div class="btn-group">
+    
+    <a class="btn btn-info" href="#"><i class="icon-user icon-white"></i> <%= current_user.first_name %></a>
+    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <li>
+      <li><%= link_to 'Change Account Password', "/users/#{current_user.id}/edit?change_pass=1" %></li>
+      <li><a href ="#" >Role : <%= current_user.role.to_s.gsub('_',' ').capitalize %></a></li>
+      
+      <li><a href = "#"> Branch : <%= current_user.branch.branch_name %></a></li>
+      <li><a href = "#"> Current Sign In IP : <%= current_user.current_sign_in_ip %></a></li>
+      <li><%= link_to 'Logout', destroy_user_session_path, :method => :delete %></li><% end %></li>
+      
+    </ul>
+  </div> 
+</div>
+
+</ui>
+<ul class="nav pull-left">
+</ul>
+</div><!-- /.container -->
+</div><!-- /.navbar-inner -->
+</div><!-- /.navbar -->
+</div>
+</div>
+
+  <body style="background-color: #F1E8D0;">
+
+<div id="wrapper"> 
+<div class="container">
+  
+  <% if notice != nil %>  <div class="alert alert-success"> <a class="close" data-dismiss="alert" href="#">X</a><%= notice %></div><% end %>
+  <% if alert != nil %><div class="alert alert-error"> <a class="close" data-dismiss="alert" href="#">X</a><%= alert %></div><% end %>
+  <%= yield %>
+</div>  
+</div>
+</body>
+</html>
+
+
+	  
+
+	  
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	  
+
+	  
+	
+

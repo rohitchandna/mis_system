@@ -1,0 +1,97 @@
+<script type="text/javascript">
+  function chk()
+  {
+  if(document.getElementById("filter_by").value == "--")
+  {
+  alert("Please select Filter Type");
+  return false;
+  }
+  }
+</script>
+
+
+
+<form method="get" enctype="multipart/form-data" action="/bank_books/approve_list" id="refine-search">
+  <table>
+    <tbody><tr>
+	<td valign="top">Filter By Branch : &nbsp;</td>
+	<td valign="top">
+	  <% @b = Branch.all(:order => :branch_name ) %>
+	  <select name="filter_by" id="filter_by">
+	    <option value="--">Select Branch</option>
+	    <% @b.each do |x| %>
+	    <option value="<%= x.id %>"><%= x.branch_name %></option>
+	    <% end %>
+	  </select>
+	</td>
+	<td valign="top">&nbsp;</td>
+	<td valign="top"><input type="submit" name="" value="Filter" class="btn btn-primary" onclick="return chk();">
+      </td></tr>
+  </tbody></table>
+</form>
+</td>
+<td>
+  
+  
+  <table class="table table-bordered"  id="index">
+    <thead>
+      <tr>
+	
+	<th width="50">#</th>
+	<th>Branch Name</th>
+	<th>Chq Date</th>
+	<th>Account Head</th>
+	<th>Narration</th>
+	<th>Remarks</th>
+	<th>Gross Amt</th>
+	<th>Service Tax</th>
+	<th>Amount</th>
+	<th>Attach Copy</th>
+	<th>Chq Amount </th>
+	<th> User </th>
+	<th> Status </th>  
+	
+	
+	<th>view </th>
+	<th>edit </th> 
+	
+      </tr>
+    </thead>
+    <% @starting = 0 %>
+    <% @bank_approve_list.each do |bank_book| %>
+    <tr>  
+      <td><%= @starting = @starting + 1 %></td>
+      <td><%= bank_book.branch.branch_name %></td>
+      <td><%= bank_book.chq_date %></td>
+      <td><%= bank_book.account_head %></td>
+      <td><%= bank_book.narration %></td>
+      <td><%= bank_book.remark %></td>
+      <td><%= bank_book.gross_amt %></td>
+      <td><%= bank_book.service_tax %></td>
+      <td><%= bank_book.amount %></td>
+      <td><%=  bank_book.attach_copy %> </td>
+      <td><%= bank_book.chq_amount %></td>
+      <td><%= get_username(bank_book.added_by.email) %></td>
+      <% if current_user.role.to_s == "admin" %>
+      <td> <% bank_book.status%>
+	<% if bank_book.status.to_s == 'approved' %>
+	<font color="green">Approved</font>
+	<% else %>
+	<%= bank_book.status.to_s.capitalize %>
+	by <%= get_username(bank_book.action_by.email) %>    
+	<% end %>
+      </td>
+      
+      <% end %>
+      
+      <% if current_user.role.to_s == "" %>
+      
+      <td> <%= link_to 'View', bank_book, :class => "show" %> </td> 
+      <td><%= link_to 'Edit', edit_bank_book_path(bank_book), :class => "edit_bank_book" %> <% end %>
+      </td>   
+      
+      <% end %>
+      
+      
+  </table>
+  

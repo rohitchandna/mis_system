@@ -1,56 +1,18 @@
+
 <%= form_for(@bank_book) do |f| %>
-<% if @bank_book.errors.any? %>
-<div id="error_explanation">
-  <h2><%= pluralize(@bank_book.errors.count, "error") %> prohibited this bank_book from being saved:</h2>
+  <% if @bank_book.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@bank_book.errors.count, "error") %> prohibited this bank_book from being saved:</h2>
 
-  <ul>
-    <% @bank_book.errors.full_messages.each do |msg| %>
-    <li><%= msg %></li>
-    <% end %>
-  </ul>
-</div>
+      <ul>
+      <% @bank_book.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
   <% end %>
-  
-  <div style="width:50%" >
-    <table class="table table-bordered">
-      
-      <tr>
-       <td><%= f.label :branch_id, "Branch" %> 
-        <%= f.select(:branch_id, Branch.all.collect {|p| [ p.branch_name, p.id ] }) %>
-      </td> 
-      </tr>
-      <tr>
-	<td><%= f.label :chq_date, "Chq Date" %>
-	 
-   <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-
-<script>
-$(function() {
-$( "#datepicker" ).datepicker();
-});
-</script>
 
 
-<p> <input type="text" id="datepicker"></p>
-</td>
-      </tr>      
-      
-      <tr>
-	<td><div class="form-action">
-	    <%= f.submit nil, :class => "btn btn-primary" %>
-	    <%= link_to 'Cancel', branches_path, :class => "btn" %>	
-	  </div>
-      </tr>
-    </table>
-  </div>
-  
-  <div class="control-group">
-    <br />
-    
-  </div>
-  
-</fieldset>
+
 <% end %>
 

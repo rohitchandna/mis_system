@@ -1,16 +1,24 @@
 MisSystem::Application.routes.draw do
  
 
-  resources :bank_books
+  resources :bank_books do 
+    get 'pending_list', :on => :collection 
+    get 'approve_list', :on => :collection 
+  
+		member do
+		    post 'change_status'
+	    end
 
-
-  devise_for :users
-
-resources :branches do
-
-get 'welcome', :on => :collection
 
 end
+
+  devise_for :users
+  
+  resources :branches do
+
+    get 'welcome', :on => :collection
+
+  end
 
 
   # The priority is based upon order of creation:
@@ -62,7 +70,7 @@ end
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => "branches#welcome"
+  #root :to => "branches/welcome"
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.

@@ -1,0 +1,5 @@
+
+<%= form_for(@bank_book) do |f| %>
+
+<% end %>
+
