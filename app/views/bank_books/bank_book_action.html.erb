@@ -1,11 +1,4 @@
-
-
-
-
-
-
-<p id="notice"><%= notice %></p>
-
+<%= form_for :bank_book, :as => :bank_book, :url => change_status_bank_books_path do |f| %>
 
 
 <div class="row">
@@ -20,13 +13,17 @@
       <td>
 	<% if @bank_book.status.to_s == 'not_approved'%>
 	<font color="red">
-	
+	  
 	  (Not Approved Yet)
 	  <% else %> <font color="red"></font>
 	  <% end %>
       </td>
     </tr>
-        
+    <tr>
+      <td><b>Created Time:<b></td>
+      
+      <td><%= @bank_book.created_time %></td>
+    </tr>
     
     <tr>
       <td><b>Amount :<b></td>
@@ -70,7 +67,9 @@
       <td><%= @bank_book.amount %></td>
     </tr>  
     <tr> 
-     </tr>
+  
+
+   </tr>
     
     <tr>  
       <td><b> Created By :<b></td>
@@ -78,40 +77,56 @@
     </tr>
     <tr>
       <td><b> Created Date :<b></td>
-      <td><%# @bank_book.created_date.strftime("%d-%b-%Y") %></td>
+      <td><%= Date.today %>
+	<input type="hidden" name="id" value=<%= params[:id] %>	
+
+</td>
     </tr>
     <tr>
       <td><b>Current Status :<b></td>
       <td>
-	<% if @bank_book.status.to_s == 'no_action' %>
+	<% if @bank_book.status.to_s == 'not_approved' %>
 	<b><font color="red"> Not Approved</font></td>
       <% else %>
       <b><font color="red"><%= @bank_book.status.capitalize %></font> <br>
+
 	by <%= @bank_book.added_by.email %>
 </td>
 <% end %>
 </tr>
 <tr>
   <td><b>Download Attached Document <b></td>
- <td> <a href="<%= @bank_book.attach_copy %>" target= _blank>Download</a></td>    
- 
+  <td><a href="<%= @bank_book.attach_copy %>" target = _blank >Download</a> </td>
+</tr>
+	<% if (current_user.role.to_s == 'account_head' or current_user.role.to_s == 'admin' or current_user.role.to_s == 'branch_manager') && @bank_book.status.to_s == 'not_approved' %>
+    <tr>
+      <td><b>Approve/ Reject Bill <b></td>
+      <td>
+<select id="bank_book_status" name="bank_book[status]" style = "width:400px">
+<option value = "approved">Approve Bill And Send Bill To Account Deptt.</option>
+<option value = "no_action">No Action Yet</option>
+<option value = "rejected">Reject This Bill</option>
+</select>
+ </td>
+    </tr>
+  </td>
 </tr>
 
+<tr>
+  
+</tr>
+<tr>
+  <td></td>
+  <td >
+    <%# if @bank_book.status.to_s != 'rejected' && Date.today.strftime("%d").to_i <= 25%>
+       <input type="submit" name="submit" value ="Update Status"class="btn btn-primary">
+       <% else %>
 
-</table>
-
-
-
-
+       <% end %>
+  </td>
+</tr>
+<% end %>
 </div>
-
-
-
-
-
-
-
-
 
 
 

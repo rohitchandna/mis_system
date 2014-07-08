@@ -69,29 +69,31 @@
       <td><%= bank_book.gross_amt %></td>
       <td><%= bank_book.service_tax %></td>
       <td><%= bank_book.amount %></td>
-      <td><%=  bank_book.attach_copy %> </td>
+      <td><%  bank_book.attach_copy %> 
+      <a href="<%= bank_book.attach_copy %>" target="_blank">Download</a> </td>
       <td><%= bank_book.chq_amount %></td>
       <td><%= get_username(bank_book.added_by.email) %></td>
-      <% if current_user.role.to_s == "admin" %>
-      <td> <% bank_book.status%>
-	<% if bank_book.status.to_s == 'approved' %>
-	<font color="green">Approved</font>
-	<% else %>
-	<%= bank_book.status.to_s.capitalize %>
-	by <%= get_username(bank_book.action_by.email) %>    
-	<% end %>
-      </td>
       
+       <% bank_book.status%>
+      <% if bank_book.status.to_s == 'approved' %>
+     <td> <font color="green">Approved</font></td>
+      <% else %>
+      <%= bank_book.status.to_s.capitalize %>
+      by <%= get_username(bank_book.action_by.email) %>    
       <% end %>
-      
-      <% if current_user.role.to_s == "" %>
-      
-      <td> <%= link_to 'View', bank_book, :class => "show" %> </td> 
-      <td><%= link_to 'Edit', edit_bank_book_path(bank_book), :class => "edit_bank_book" %> <% end %>
-      </td>   
-      
-      <% end %>
-      
-      
-  </table>
-  
+</td>
+
+
+
+<% if current_user.role.to_s == "admin" %>
+
+<td><a href="/bank_books/<%= bank_book.id %>">show</a></td>
+<td><a href="/bank_books/<%= bank_book.id %>/edit">edit</a></td>     
+
+</td>   
+</tr>      
+<% end %>
+<% end %>
+
+</table>
+

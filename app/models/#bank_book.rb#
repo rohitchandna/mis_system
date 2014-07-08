@@ -59,6 +59,8 @@ class BankBook
   belongs_to :branch
   belongs_to :added_by, User, :required => true
   belongs_to :update_by, User, :required => false	
- 
+  
+  
+
   
 end

@@ -53,7 +53,7 @@ gem 'cancan', :git => "https://github.com/ryanb/cancan.git", :branch => "2.0"
 gem "twitter-bootstrap-rails", "~> 2.0.5" 
 gem 'jquery-rails', '~> 2.0.1'
 gem "mini_magick"
-
+gem 'crack'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.1'

@@ -19,11 +19,8 @@ class Ability
         
         can :access,  :bank_books, :added_by_id => user.id  
 
-    	elsif user.role.to_s == "admin"
-	can :access, :branches
-	can :access, :bank_books 	
-      
-	end
+    
+      end
     end
   end
   

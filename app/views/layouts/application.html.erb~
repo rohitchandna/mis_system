@@ -32,48 +32,53 @@
 		<span class="icon-bar"></span>
 		<span class="icon-bar"></span>
 	      </a>
+	      <% if current_user %>
 	      <a class="brand" href="/">MIS System</a>
               <div class="nav-collapse">
 		<ul class="nav"> 
 		  
-
+		
 		  <li>
+		 <%  if  current_user.role.to_s == "admin" %> 
 		    <ul class="nav">
-		      <li class="dropdown">
-			<a href="#"
-			   class="dropdown-toggle"
-			   data-toggle="dropdown">
-			  Branch
-			  <b class="caret"></b>
-			</a>
-			<ul class="dropdown-menu">
-			  <li ><%= link_to 'branch' %></li>	
-			  
+		    
+		     <li class="dropdown">
+		       <a href="#"
+			  class="dropdown-toggle"
+			  data-toggle="dropdown">
+			Branch	
+			 <b class="caret"></b>
+		       </a>
+		       <ul class="dropdown-menu">
+			 <li ><%= link_to 'Branch', "/branches" %> </li>
+		
+			 
 			</ul>
+		
 		      </li>
 		    </ul>
 		  </li>
-
+			 <% end %>  
 		  <li>
 		    <ul class="nav">
 		      <li class="dropdown">
 			<a href="#"
 			   class="dropdown-toggle"
 			   data-toggle="dropdown">
-				BANK BOOK
+			  BANK BOOK
 			  <b class="caret"></b>
 			</a>
 			<ul class="dropdown-menu">
 			  <li ><%= link_to 'Bank Book', "/bank_books" %></li>
 			  <li><a href="/bank_books/pending_list">Pending List</a></li>
-			<li><a href="/bank_books/approve_list">Approve Bank Book List</a></li>
+			  <li><a href="/bank_books/approve_list">Approve Bank Book List</a></li>
 			</ul>
 		      </li>
 		    </ul>
 		  </li>
-		  	
-
-
+		  
+		  
+		  
 		  
 		  
 </form>
@@ -82,20 +87,20 @@
 <ul class="nav pull-right">
   <div class="btn-group">
     
-    <a class="btn btn-info" href="#"><i class="icon-user icon-white"></i> <%# current_user.first_name %></a>
+    <a class="btn btn-info" href="#"><i class="icon-user icon-white"></i> <%= current_user.first_name %></a>
     <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
     <ul class="dropdown-menu">
       <li>
-      <li><%# link_to 'Change Account Password', "/users/#{current_user.id}/edit?change_pass=1" %></li>
-      <li><a href ="#" >Role : <%# current_user.role.to_s.gsub('_',' ').capitalize %></a></li>
+      <li><%= link_to 'Change Account Password', "/users/#{current_user.id}/edit?change_pass=1" %></li>
+      <li><a href ="#" >Role : <%= current_user.role.to_s.gsub('_',' ').capitalize %></a></li>
       
-      <li><a href = "#"> Branch : <%# current_user.branch.branch_name %></a></li>
-      <li><a href = "#"> Current Sign In IP : <%# current_user.current_sign_in_ip %></a></li>
+      <li><a href = "#"> Branch : <%= current_user.branch.branch_name %></a></li>
+      <li><a href = "#"> Current Sign In IP : <%= current_user.current_sign_in_ip %></a></li>
       <li><%= link_to 'Logout', destroy_user_session_path, :method => :delete %></li></li>
-      
+      <li><a href = "#"> email: <%= current_user.email  %></a></li>
     </ul>
   </div> 
-</div>
+<% end %>
 
 </ui>
 <ul class="nav pull-left">

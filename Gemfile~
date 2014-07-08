@@ -27,6 +27,7 @@ gem 'dm-rails',               '~> 1.2.1'
 gem 'dm-postgres-adapter',  DM_VERSION
 # gem 'dm-oracle-adapter',    DM_VERSION
 # gem 'dm-sqlserver-adapter', DM_VERSION
+gem 'bootstrap-datepicker-rails', :require => 'bootstrap-datepicker-rails', :git => 'git://github.com/Nerian/bootstrap-datepicker-rails.git'
 
 gem 'dm-migrations',   DM_VERSION
 gem 'dm-types',        DM_VERSION

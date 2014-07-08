@@ -1,0 +1,14 @@
+#!/bin/bash
+SERVER="192.168.0.100"
+
+NOTIFYEMAIL=rohit.chandna@greenbackforex.com
+#NOTIFYEMAIL=rohit.chandna@greenbackforex.com
+#SMSEMAIL=<cell phone number @ sms-gateway>
+SENDEREMAIL=rohit.chandna@greenbackforex.com
+for b in "$SERVERS"
+do
+ ssh user@${b} date >> mail.log
+
+echo "$SERVER went down $(date)" | /usr/bin/mailx -s "$SERVER went down" -r "$SENDEREMAIL" 
+        echo "$SERVER went down $(date)" | /usr/bin/mailx -s "$SERVER went down" -r "$SENDEREMAIL" "$NOTIFYEMAIL"
+done

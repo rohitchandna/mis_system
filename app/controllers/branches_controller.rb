@@ -1,10 +1,11 @@
 class BranchesController < ApplicationController
-  load_and_authorize_resource
+
   
   # GET /branches
   # GET /branches.json
+  load_and_authorize_resource
   def index
-    @branches = Branch.all(:order => :branch_name.asc)
+    @branches = Branch.all(:order => :branch_name.asc).accessible_by(current_ability, :index)
     
     respond_to do |format|
       format.html # index.html.erb

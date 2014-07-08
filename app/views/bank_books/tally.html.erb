@@ -1,0 +1,201 @@
+<% require 'rubygems' %>
+ <% require "net/http" %>
+ <% require "uri" %>
+<%# require 'nokogiri' %>
+
+<% require 'rexml/document'%>
+ <% require 'crack' # for xml and json %>
+
+
+
+<div class="row">
+  <div class="span9"><h2><font color="green">Bank Book List</font></h2><b><span class ="total"></span></b></div>
+  <div class="span3"><%= link_to 'Add New Bank Book', new_bank_book_path, :class => "btn btn-info" %>
+  </div>
+  
+
+</div>
+
+
+<div class="span9"><h2><font color="black"></h2>Total Record : <b><span class ="total"><font color="green"><%= @bank_books.count %></font></span></b></div>
+<br>
+<table class="table table-bordered"  id="index" %>
+  <thead>
+    <tr>
+      
+      <th width="10">#</th>
+      <th>Branch Name</th>
+      <th>Chq Date</th>
+      <th>Account Head</th>
+      <th>Narration</th>
+      <th>Remarks</th>
+      <th>Gross Amt</th>
+      <th>Service Tax</th>
+      <th>Amount</th>
+      <th>Attach Copy</th>
+      <th>Created Date </th>
+      <th>Chq Amount </th>
+      <th>Added By</th>
+      <th> Status </th>  
+      <th>view </th>
+      <th>Aprrove/Reject </th> 
+      
+    </tr>  
+  </thead>
+  <% @starting = 0 %>
+  <% @bank_books.each do |bank_book| %>
+  <tr>  
+    <td><%= @starting = @starting + 1 %></td>
+    
+    
+    <td><%= current_user.branch.branch_name %></td>
+    
+    <div class="field">
+    <td><%= bank_book.chq_date %></td> </div>
+    <td><%= bank_book.account_head %></td>
+    <td><%= bank_book.narration %></td>
+    <td><%= bank_book.remark %></td>
+    <td><%= bank_book.gross_amt %></td>
+    <td><%= bank_book.service_tax %></td>
+    <td><%= bank_book.amount %></td>
+    <td><%  bank_book.attach_copy %> 
+      <% if bank_book.attach_copy.length > 0 %>
+      <a href="<%= bank_book.attach_copy %>" target="_blank">Download</a>
+      
+      <% else %>
+      No Attachment
+      <% end %>
+    </td> 
+    
+    <td><%= bank_book.created_date %></td>
+    <td><%= bank_book.chq_amount %></td>
+    <td><%= get_username(bank_book.added_by.first_name)  %></td>
+    
+    <td> <% bank_book.status%>
+      <% if bank_book.status.to_s == 'not_approved' %>
+      <font color="red">Not Approved</font>
+      <% else %>
+      <font color="green"</font>    
+	    <%= bank_book.status.to_s.capitalize %>
+	    by <%= get_username(bank_book.added_by.first_name) %>    
+	    <% end %>
+</td>
+
+
+<td><a href="/bank_books/<%= bank_book.id %>">show</a></td>
+
+<td><a href="/bank_books/bank_book_action?id=<%= bank_book.id %>">Approve/Reject</a></td>
+
+</tr>
+
+
+
+
+
+
+</table>
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+<% a = Time.now.to_s %>
+
+
+ 
+<% narration = "abc" %>
+	
+
+<%special_note_narration = 'xyz'%>
+ <% bill_number = 'a/2014/12' %>
+<% client_name_tally = 'rohit' %>
+<% final_figure = '2000' %>
+<% professional_fees_paid = '5000' %>
+<% amount_calculated ='25000'  %>
+<% service_tax_paid = '12'%>
+
+<% message='<ENVELOPE>
+    <HEADER>
+    <VERSION>1</VERSION>
+    <TALLYREQUEST>Import</TALLYREQUEST>
+    <TYPE>Data</TYPE>
+    <ID>Vouchers</ID>
+    </HEADER>
+<BODY>
+    <DESC>
+        <STATICVARIABLES>
+           <SVCURRENTCOMPANY>
+                    Regal Solutions Pvt. Ltd. (From 1-Apr-2011)
+                </SVCURRENTCOMPANY>
+        </STATICVARIABLES>
+    </DESC>
+        <DATA>
+            <TALLYMESSAGE>
+                <VOUCHER>
+		
+                <DATE>' + a + '</DATE>
+                <NARRATION>' + bank_book.narration + '  '+ special_note_narration +'</NARRATION>
+                <VOUCHERTYPENAME>Sales</VOUCHERTYPENAME>
+                <VOUCHERNUMBER>' + bank_book.chq_amount.to_s + '</VOUCHERNUMBER>
+                <ALLLEDGERENTRIES.LIST>
+                    <LEDGERNAME>'  + bank_book.chq_date.to_s + '</LEDGERNAME>
+                    <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
+                    <ACCOUNTHEAD>' + bank_book.account_head + '</ACCOUNTHEAD>
+                    <BILLALLOCATIONS.LIST>
+                    <NAME>' + bank_book.narration + '</NAME>
+                    <BILLTYPE>New Ref</BILLTYPE>
+                    <TDSDEDUCTEEISSPECIALRATE>No</TDSDEDUCTEEISSPECIALRATE>
+                       <AMOUNT>' + bank_book.remark + '</AMOUNT>
+                       <INTERESTCOLLECTION.LIST>        </INTERESTCOLLECTION.LIST>
+                    </BILLALLOCATIONS.LIST>
+                </ALLLEDGERENTRIES.LIST>
+                   
+                <ALLLEDGERENTRIES.LIST>
+                    <LEDGERNAME>'  + bank_book.gross_amt.to_s  + '</LEDGERNAME>
+                    <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>
+                    <AMOUNT>' + bank_book.service_tax.to_s + '</AMOUNT>
+                    <AMOUNT>' + bank_book.amount.to_s + '</AMOUNT>
+
+                </ALLLEDGERENTRIES.LIST>
+               
+                <ALLLEDGERENTRIES.LIST>
+                    <LEDGERNAME>Service Tax Payable @ 12.36%</LEDGERNAME>
+                    <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>
+                    <AMOUNT>'  + service_tax_paid + '</AMOUNT>
+                    <BILLALLOCATIONS.LIST>
+                    <NAME>' + bank_book.attach_copy.to_s + '</NAME>
+                    <BILLTYPE>New Ref</BILLTYPE>
+                    <TDSDEDUCTEEISSPECIALRATE>No</TDSDEDUCTEEISSPECIALRATE>
+                    <AMOUNT>' + service_tax_paid + '</AMOUNT>
+                    <INTERESTCOLLECTION.LIST>        </INTERESTCOLLECTION.LIST>
+                    </BILLALLOCATIONS.LIST>
+                  </ALLLEDGERENTRIES.LIST>
+                </VOUCHER>
+            </TALLYMESSAGE>
+        </DATA>
+</BODY>
+</ENVELOPE> '
+ %>
+
+
+
+
+
+ <%message %>
+
+<hr>
+
+<%= Crack::XML.parse(message) %>
+<% end %>
+
+
