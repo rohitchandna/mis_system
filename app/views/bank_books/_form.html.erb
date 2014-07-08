@@ -1,4 +1,4 @@
-<%= params.inspect %>
+
 
 
 <%= form_for(@bank_book) do |f| %>
@@ -86,7 +86,7 @@
     </tr>
     
     <tr>
-      <td><%= f.label :created_date, "Created Date" %>
+      <td><%= f.label :created_date, "Created Date" %></td>
       <td><%= Date.today.strftime("%d-%b-%Y") %></td>	
 </tr>
     

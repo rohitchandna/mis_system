@@ -4,7 +4,7 @@
 
 
 
-<p id="notice"><%= notice %></p>
+
 
 
 
@@ -22,7 +22,7 @@
 	<font color="red">
 	
 	  (Not Approved Yet)
-	  <% else %> <font color="red">></font>
+	  <% else %> <font color="red"></font>
 	  <% end %>
       </td>
     </tr>
@@ -83,10 +83,11 @@
     <tr>
       <td><b>Current Status :<b></td>
       <td>
-	<% if @bank_book.status.to_s == 'no_action' %>
-	<b><font color="red"> Not Approved</font></td>
+	<% if @bank_book.status.to_s == 'approved' %>
+	<b><font color="green"> Approved </font>
+by <%= @bank_book.added_by.email %></td>
       <% else %>
-      <b><font color="red"><%= @bank_book.status.capitalize %></font> <br>
+      <b><font color="red"><%= @bank_book.status.to_s.capitalize %></font> <br>
 	by <%= @bank_book.added_by.email %>
 </td>
 <% end %>

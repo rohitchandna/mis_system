@@ -108,34 +108,37 @@ class BankBooksController < ApplicationController
     redirect_to new_user_session_path, {notice: "You need to Sign in before continuing."} and return unless current_user
     
     @a = BankBook.first(:id => params[:id].to_i)
-    	
-    if @a.status.to_s == "not_approved"
+   
+    if @a.status.to_s == "Not Approved"
       
       @a.update(:status => params[:bank_book][:status], :action_date => Date.today, :action_time => Time.now, :action_by_id => current_user.id)
-     	
-
-      if @a.save
-        if @a.status.to_s == "approved"
-          
-          # approve_by_email = @a.email
-          # debugger
-          # approve_by_name = "#{@a.action_by.first_name} #{@a.action_by.last_name}" 
-         end #approved
-      end #if  save
-      respond_to do |format|
-        format.html { redirect_to "/bank_books/#{@a.id}", notice: 'ss' }
-       
-     end 
-      
-         else 
-          respond_to do |format|
-           format.html { redirect_to "/bank_books/#{@a.id}", alert: ' Already Approved !' }
-        end
-   end 
+    end 
+    if @a.save
+      if @a.status.to_s == "approved"
+        
+        # approve_by_email = @a.email
+         # debugger
+        # approve_by_name = "#{@a.action_by.first_name} #{@a.action_by.last_name}" 
+      end #approved
+    end #if  save
+    respond_to do |format|
+      format.html { redirect_to "/bank_books/#{@a.id}", notice: 'ss' }
+    end
+ debugger
+      elsif @a.status.to_s == "rejected"
+        
+	respond_to do |format|
+      format.html { redirect_to "/bank_books/#{@a.id}", notice: 'Rejected.' }
     
-  end  
+    # else 
+    #  respond_to do |format|
+  
 
+  #   format.html { redirect_to "/bank_books/#{@a.id}", alert: ' Already Approved !' }
+end
 
+  end
+  
   
   
   
@@ -151,7 +154,7 @@ class BankBooksController < ApplicationController
       
     else
       @bank_pending_list = BankBook.all(:conditions => {:status => "not_approved", :branch_id => params[:filter_by].to_i}).accessible_by(current_ability, :index)
-      end   
+    end   
     respond_to do |format|
       format.html
       
@@ -168,7 +171,7 @@ class BankBooksController < ApplicationController
       
       @bank_approve_list =BankBook.all(:conditions => {:status => "approved", :branch_id => params[:filter_by].to_i}).accessible_by(current_ability, :index)
       
-    end
+  end
     respond_to do |format|
       format.html
     end

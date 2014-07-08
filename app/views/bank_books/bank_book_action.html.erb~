@@ -85,10 +85,10 @@
     <tr>
       <td><b>Current Status :<b></td>
       <td>
-	<% if @bank_book.status.to_s == 'not_approved' %>
-	<b><font color="red"> Not Approved</font></td>
+	<% if @bank_book.status.to_s == 'approved' %>
+	<b><font color="green"> Approved</font></td>
       <% else %>
-      <b><font color="red"><%= @bank_book.status.capitalize %></font> <br>
+      <b><font color="red"><%= @bank_book.status.to_s %></font> <br>
 
 	by <%= @bank_book.added_by.email %>
 </td>

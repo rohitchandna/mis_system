@@ -18,51 +18,52 @@
       
 <ul class="thumbnails" style="margin: auto">
 <!--
-<li style="height: 145px; box-shadow: 1px 1px 4px #cfcfcf; padding: 4px;" class="editing span2">
-<h3 style="text-align: center" class="index_header">New Company</h3>
-<div style="text-align: center; padding: 4px">
-Hemlon Synthetics Pvt. Ltd.
-<br>
-<a href="/companies/1880">Show</a>
+
 
 </div>
 
-</li><li style="height: 145px; box-shadow: 1px 1px 4px #cfcfcf; padding: 4px;" class="editing span2">
-<h4 style="text-align: center" class="index_header">New Company Office</h4>
-<div style="text-align: center; padding: 4px">
-Lotus International
-<br>
-<a href="/company_offices/1880">Show</a>
 
-</div>
-</li>
 -->
 <li class="editing span2" style="height: 145px; box-shadow: 1px 1px 4px #cfcfcf; padding: 4px;">
-<h4 class="index_header" style="text-align: center">Total Company</h4>
+<h4 class="index_header" style="text-align: center">Bank Book</h4>
 <div style="text-align: center; padding: 4px">
 <% if current_user.role.to_s == 'admin' %>
-<%= Branch.all.count %>
+<%= BankBook.all.count %>
 <% else %>
-<%= Branch.all(:conditions => {:branch_id => current_user.branch.id, :enabled => true}).count %>
+<%= BankBook.all.count %>
 <% end %>
 <br>
-<a href="/branches/">Show</a>
-
-</div>
-</li>
-<li class="editing span2" style="height: 145px; box-shadow: 1px 1px 4px #cfcfcf; padding: 4px;">
-<h4 class="index_header" style="text-align: center">Report Enabled Client</h4>
-<div style="text-align: center; padding: 4px">
-
+<a href="/bank_books">Show</a>
 
 
 </div>
 </li>
+<li class="editing span2" style="height: 145px; box-shadow: 1px 1px 4px #cfcfcf; padding: 4px;">
+<h4 class="index_header" style="text-align: center">Apporoved Bank Bill</h4>
+<div style="text-align: center; padding: 4px">
+<% if current_user.role.to_s == 'admin' %>
+<%= BankBook.count(:status => "approved") %>
+<% else %>
+<%= BankBook.count(:status => "approved") %>
+<% end %>
+<br>
+<a href="/bank_books/approve_list">Show</a>
+
+
+</div>
+</li>
 
 <li class="editing span2" style="height: 145px; box-shadow: 1px 1px 4px #cfcfcf; padding: 4px;">
-<h4 class="index_header" style="text-align: center">Employee on leave</h4>
+<h4 class="index_header" style="text-align: center">Pending Bank Book List</h4>
 <div style="text-align: center; padding: 4px">
+<% if current_user.role.to_s == 'admin' %>
+<%= BankBook.count(:status => "not_approved") %>
+<% else %>
+<%= BankBook.count(:status => "not_approved") %>
+<% end %>
+<br>
 
+<a href="/bank_books/pending_list">Show</a>
 
 </tr>
 
@@ -70,11 +71,22 @@ Lotus International
 
 
 <li class="editing span2" style="height: 145px; box-shadow: 1px 1px 4px #cfcfcf; padding: 4px;">
-<h4 class="index_header" style="text-align: center">Active Employees</h4>
+<h4 class="index_header" style="text-align: center">Rejected Bank Book List</h4>
 <div style="text-align: center; padding: 4px">
 
 
+<% if current_user.role.to_s == 'admin' %>
+<%= BankBook.count(:status => "rejected") %>
+<% else %>
+<%= BankBook.count(:status => "rejected") %>
+<% end %>
+<br>
 
+<a href="/bank_books/rejected">Show</a>
+
+</tr>
+
+</div>
 
 
 

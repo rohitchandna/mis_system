@@ -48,7 +48,7 @@ class BankBooksController < ApplicationController
   # POST /bank_books
   # POST /bank_books.json
   def create
-debugger
+
  
     params[:bank_book][:added_by_id] = current_user.id
     params[:bank_book][:added_date] = Time.now    
@@ -108,27 +108,34 @@ debugger
     redirect_to new_user_session_path, {notice: "You need to Sign in before continuing."} and return unless current_user
     
     @a = BankBook.first(:id => params[:id].to_i)
-    debugger
-    if @a.status.to_s == "Not Approved"
+    	
+    if @a.status.to_s == "not_approved"
       
       @a.update(:status => params[:bank_book][:status], :action_date => Date.today, :action_time => Time.now, :action_by_id => current_user.id)
-    end 
-    if @a.save
-      if @a.status.to_s == "approved"
-        
-        # approve_by_email = @a.email
-         # debugger
-        # approve_by_name = "#{@a.action_by.first_name} #{@a.action_by.last_name}" 
-      end #approved
-    end #if  save
-    respond_to do |format|
-      format.html { redirect_to "/bank_books/#{@a.id}", notice: ' Status Updated.' }
-    end
-    # else 
-    #  respond_to do |format|
-    #   format.html { redirect_to "/bank_books/#{@a.id}", alert: ' Already Approved !' }
-  end
-  
+     	
+
+      if @a.save
+        if @a.status.to_s == "approved"
+          
+          # approve_by_email = @a.email
+          # debugger
+          # approve_by_name = "#{@a.action_by.first_name} #{@a.action_by.last_name}" 
+         end #approved
+      end #if  save
+      respond_to do |format|
+        format.html { redirect_to "/bank_books/#{@a.id}", notice: 'Status Update' }
+       
+     end 
+      
+         else 
+          respond_to do |format|
+           format.html { redirect_to "/bank_books/#{@a.id}", alert: ' Already Approved !' }
+        end
+   end 
+    
+  end  
+
+
   
   
   
@@ -144,7 +151,7 @@ debugger
       
     else
       @bank_pending_list = BankBook.all(:conditions => {:status => "not_approved", :branch_id => params[:filter_by].to_i}).accessible_by(current_ability, :index)
-    end   
+      end   
     respond_to do |format|
       format.html
       
@@ -161,7 +168,7 @@ debugger
       
       @bank_approve_list =BankBook.all(:conditions => {:status => "approved", :branch_id => params[:filter_by].to_i}).accessible_by(current_ability, :index)
       
-  end
+    end
     respond_to do |format|
       format.html
     end
@@ -181,6 +188,22 @@ def tally
 
 
 end
+def reject_list
+ redirect_to new_user_session_path, {notice: "You need to Sign in before continuing."} and return unless current_user
+    
+    if params[:filter_by].to_s == ""  
+      @bank_reject_list =BankBook.all(:conditions => {:status => "rejected", :branch_id => current_user.branch_id}).accessible_by(current_ability, :index) 
+      
+    else
+      
+      @bank_approve_list =BankBook.all(:conditions => {:status => "rejected", :branch_id => params[:filter_by].to_i}).accessible_by(current_ability, :index)
+      
+  end
+    respond_to do |format|
+      format.html
+    end
+    
 
+end
   
 end

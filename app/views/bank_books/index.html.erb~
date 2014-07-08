@@ -5,13 +5,18 @@
   <div class="span9"><h2><font color="green">Bank Book List</font></h2><b><span class ="total"></span></b></div>
   <div class="span3"><%= link_to 'Add New Bank Book', new_bank_book_path, :class => "btn btn-info" %>
   </div>
+  
+
 </div>
+
+
+<div class="span9"><h2><font color="black"></h2>Total Record : <b><span class ="total"><font color="green"><%= @bank_books.count %></font></span></b></div>
 <br>
 <table class="table table-bordered"  id="index" %>
   <thead>
     <tr>
       
-      <th width="50">#</th>
+      <th width="10">#</th>
       <th>Branch Name</th>
       <th>Chq Date</th>
       <th>Account Head</th>
@@ -23,23 +28,23 @@
       <th>Attach Copy</th>
       <th>Created Date </th>
       <th>Chq Amount </th>
-      <th width="50">User</th>
+      <th>Added By</th>
       <th> Status </th>  
       <th>view </th>
       <th>Aprrove/Reject </th> 
       
-      
+    </tr>  
   </thead>
   <% @starting = 0 %>
   <% @bank_books.each do |bank_book| %>
   <tr>  
     <td><%= @starting = @starting + 1 %></td>
-   
+    
     
     <td><%= current_user.branch.branch_name %></td>
-
-
-    <td><%= bank_book.chq_date %></td>
+    
+    <div class="field">
+    <td><%= bank_book.chq_date %></td> </div>
     <td><%= bank_book.account_head %></td>
     <td><%= bank_book.narration %></td>
     <td><%= bank_book.remark %></td>
@@ -54,32 +59,34 @@
       No Attachment
       <% end %>
     </td> 
-</td>
+    
     <td><%= bank_book.created_date %></td>
     <td><%= bank_book.chq_amount %></td>
-    <td><%= get_username(bank_book.added_by.email) %></td>
-    <% if current_user.role.to_s == "admin" %>
-<td> <% bank_book.status%>
-      <% if bank_book.status.to_s == 'not_approved' %>
-      <font color="red">Not Approved</font>
-      <% else %>
-      <%= bank_book.status.to_s.capitalize %><br>
-      by <%= get_username(bank_book.added_by.first_name) %>    
-      <% end %>
-    </td>
-
-
-    <td><a href="/bank_books/<%= bank_book.id %>">show</a></td>
+    <td><%= get_username(bank_book.added_by.first_name)  %></td>
     
- <td><a href="/bank_books/bank_book_action?id=<%= bank_book.id %>">Approve/Reject</a></td>
- 
-  </tr>
- 
-  <% end %>
-  
-  <% end %>
-  
-  
+    <td> <% bank_book.status%>
+      <% if bank_book.status.to_s == 'approved' %>
+      <font color="green">Approved</font>
+by <%= get_username(bank_book.added_by.first_name) %>
+      <% else %>
+      <font color="red"</font>    
+	    <%= bank_book.status.to_s.capitalize %>
+	    by <%= get_username(bank_book.added_by.first_name) %>    
+	    <% end %>
+</td>
+
+
+<td><a href="/bank_books/<%= bank_book.id %>">show</a></td>
+
+<td><a href="/bank_books/bank_book_action?id=<%= bank_book.id %>">Approve/Reject</a></td>
+
+</tr>
+
+
+
+<% end %>
+
+
 </table>
 
 

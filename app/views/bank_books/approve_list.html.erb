@@ -50,11 +50,11 @@
 	<th>Chq Amount </th>
 	<th> User </th>
 	<th> Status </th>  
-	
+	<% if current_user.role.to_s == "admin" %>
 	
 	<th>view </th>
 	<th>edit </th> 
-	
+	<% end %>
       </tr>
     </thead>
     <% @starting = 0 %>
@@ -76,7 +76,8 @@
       
        <% bank_book.status%>
       <% if bank_book.status.to_s == 'approved' %>
-     <td> <font color="green">Approved</font></td>
+     <td> <font color="green">Approved
+by <%= get_username(bank_book.added_by.first_name) %></td></font>
       <% else %>
       <%= bank_book.status.to_s.capitalize %>
       by <%= get_username(bank_book.action_by.email) %>    

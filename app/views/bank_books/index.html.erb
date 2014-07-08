@@ -16,7 +16,7 @@
   <thead>
     <tr>
       
-      <th width="10">#</th>
+      <th width="2">#</th>
       <th>Branch Name</th>
       <th>Chq Date</th>
       <th>Account Head</th>
@@ -65,10 +65,11 @@
     <td><%= get_username(bank_book.added_by.first_name)  %></td>
     
     <td> <% bank_book.status%>
-      <% if bank_book.status.to_s == 'not_approved' %>
-      <font color="red">Not Approved</font>
+      <% if bank_book.status.to_s == 'approved' %>
+      <font color="green">Approved</font>
+by <%= get_username(bank_book.added_by.first_name) %>
       <% else %>
-      <font color="green"</font>    
+      <font color="red"</font>    
 	    <%= bank_book.status.to_s.capitalize %>
 	    by <%= get_username(bank_book.added_by.first_name) %>    
 	    <% end %>

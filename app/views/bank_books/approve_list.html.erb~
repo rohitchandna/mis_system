@@ -14,13 +14,11 @@
 <form method="get" enctype="multipart/form-data" action="/bank_books/approve_list" id="refine-search">
   <table>
     <tbody><tr>
-
-	<select name="filter_by" id="filter_by">
-   		  <option value="branch" <% if params[:filter_by].to_s == "branch" %> selected<% end %>>Branch</option> 
 	<td valign="top">Filter By Branch : &nbsp;</td>
 	<td valign="top">
 	  <% @b = Branch.all(:order => :branch_name ) %>
-	  
+	  <select name="filter_by" id="filter_by">
+	    <option value="--">Select Branch</option>
 	    <% @b.each do |x| %>
 	    <option value="<%= x.id %>"><%= x.branch_name %></option>
 	    <% end %>
@@ -71,13 +69,15 @@
       <td><%= bank_book.gross_amt %></td>
       <td><%= bank_book.service_tax %></td>
       <td><%= bank_book.amount %></td>
-      <td><%=  bank_book.attach_copy %> </td>
+      <td><%  bank_book.attach_copy %> 
+      <a href="<%= bank_book.attach_copy %>" target="_blank">Download</a> </td>
       <td><%= bank_book.chq_amount %></td>
       <td><%= get_username(bank_book.added_by.email) %></td>
       
        <% bank_book.status%>
       <% if bank_book.status.to_s == 'approved' %>
-     <td> <font color="green">Approved</font></td>
+     <td> <font color="green">Approved
+by <%= get_username(bank_book.added_by.first_name) %></td></font>
       <% else %>
       <%= bank_book.status.to_s.capitalize %>
       by <%= get_username(bank_book.action_by.email) %>    
